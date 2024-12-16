@@ -8,7 +8,6 @@ public partial class ShoppingListsPage : ContentPage
 	{
         InitializeComponent();
         BindingContext = vm;
-		//BindingContext = App.ServiceProvider.GetService<ShoppingListsPageViewModel>();
 	}
 
     protected override void OnAppearing()

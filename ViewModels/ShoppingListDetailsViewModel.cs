@@ -57,9 +57,14 @@ namespace UpggiftMAUI.ViewModels
         private async Task AddItemAsync()
         {
             if (string.IsNullOrWhiteSpace(NewItemName) || string.IsNullOrWhiteSpace(NewItemAmount))
+            {
                 return;
+            }
+
             if (!int.TryParse(NewItemAmount, out int amount))
+            {
                 return;
+            }
 
             var newItem = new ShoppingItem(NewItemName, amount, _listId);
             await _itemRepository.AddAsync(newItem);
@@ -84,29 +89,31 @@ namespace UpggiftMAUI.ViewModels
         private async Task SaveListAsync()
         {
             var list = await _listRepository.GetListByIdAsync(_listId);
-            if (list != null)
+            if(list == null)
             {
-                list.Name = ListName;
-                await _listRepository.UpdateAsync(list);
-                await Shell.Current.GoToAsync("//main");
+                return;
             }
+            list.Name = ListName;
+            await _listRepository.UpdateAsync(list);
+            await Shell.Current.GoToAsync("//main");
         }
 
         [RelayCommand]
         private async Task DeleteListAsync()
         {
             var list = await _listRepository.GetListByIdAsync(_listId);
-            if (list != null)
+            if(list == null)
             {
-                var listItems = await _itemRepository.GetByListIdAsync(_listId);
-                foreach (var item in listItems)
-                {
-                    await _itemRepository.DeleteAsync(item);
-                }
-
-                await _listRepository.DeleteAsync(list);
-                await Shell.Current.GoToAsync("//shoppinglists");
+                return;
             }
+            var listItems = await _itemRepository.GetByListIdAsync(_listId);
+            foreach (var item in listItems)
+            {
+                await _itemRepository.DeleteAsync(item);
+            }
+
+            await _listRepository.DeleteAsync(list);
+            await Shell.Current.GoToAsync("//shoppinglists");
         }
     }
 }
