@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="UpggiftMAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UpggiftMAUI"
+    xmlns:views="clr-namespace:UpggiftMAUI.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="UpggiftMAUI"
+    BackgroundColor="#3f3f40">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource GridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0" Spacing="45">
+                <Button Text="Shopping List" Command="{Binding GoToMainCommand}" Style="{StaticResource NavbarButton}"/>
+                <Button Text="My Shopping Lists" Command="{Binding GoToShoppingListsCommand}" Style="{StaticResource NavbarButton}"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    
+    
+    <ShellContent Route="main" ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Route="shoppinglists" ContentTemplate="{DataTemplate views:ShoppingListsPage}"/>
+    <ShellContent Route="listdetails" ContentTemplate="{DataTemplate views:ShoppingListDetailsPage}"/>
+
+</Shell>

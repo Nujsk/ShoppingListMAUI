@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="UpggiftMAUI.Views.ShoppingListDetailsPage"
+    x:Name="ListDetailsPage"
+    Style="{StaticResource BackgroundStyle}"
+    Title="ShoppingListDetailsPage">
+
+    <ScrollView>
+        <Grid Style="{StaticResource GridStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Edit List Name"
+                   Style="{StaticResource ShoppingListItemLabel}"
+                   Grid.Row="0" />
+
+            <Grid Grid.Row="1" Style="{StaticResource GridStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Entry Text="{Binding ListName}"
+                       Placeholder="List Name" 
+                       Style="{StaticResource ShoppingListEntry}"
+                       Grid.Column="0"/>
+
+                <Button Text="Save List" 
+                        Command="{Binding SaveListCommand}"
+                        Style="{StaticResource GeneralPurposeButton}" 
+                        MinimumWidthRequest="150"
+                        HorizontalOptions="End"
+                        Grid.Column="1" />
+            </Grid>
+
+            <Label Text="Items"
+                   Style="{StaticResource ShoppingListItemLabel}"
+                   Grid.Row="2" />
+
+            <Grid Grid.Row="3" Style="{StaticResource GridStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Entry Text="{Binding NewItemName}" 
+                       Placeholder="Item Name" 
+                       Style="{StaticResource ShoppingListEntry}"
+                       Grid.Column="0"/>
+
+                <Entry Text="{Binding NewItemAmount}" 
+                       Placeholder="Amount" 
+                       Style="{StaticResource ShoppingListEntry}"
+                       WidthRequest="80"
+                       Grid.Column="1"/>
+
+                <Button Text="Add" 
+                        Command="{Binding AddItemCommand}"
+                        Style="{StaticResource GeneralPurposeButton}"
+                        Grid.Column="2"/>
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding Items}"
+                            Margin="0,20,0,0"
+                            Grid.Row="4">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Style="{StaticResource GridStyle}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Name}" 
+                                   Style="{StaticResource ShoppingListItemLabel}" 
+                                   Grid.Column="0"/>
+
+                            <Label Text="x"
+                                   Style="{StaticResource ShoppingListItemLabel}" 
+                                   Grid.Column="1" 
+                                   HorizontalOptions="Center"/>
+
+                            <Label Text="{Binding Amount}"
+                                   Style="{StaticResource ShoppingListItemLabel}"
+                                   Grid.Column="2"
+                                   HorizontalOptions="End"/>
+
+                            <Button Text="Remove"
+                                    Command="{Binding Source={x:Reference ListDetailsPage}, Path=BindingContext.RemoveItemCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource GeneralPurposeButton}"
+                                    Grid.ColumnSpan="3"
+                                    HorizontalOptions="End"
+                                    Margin="0,0,0,10"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <Button Text="Delete List"
+                    Command="{Binding DeleteListCommand}"
+                    Style="{StaticResource GeneralPurposeButton}"
+                    BackgroundColor="#ab1b1b"
+                    Grid.Row="5"
+                    HorizontalOptions="Center"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

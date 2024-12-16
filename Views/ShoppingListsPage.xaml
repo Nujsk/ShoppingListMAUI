@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="UpggiftMAUI.Views.ShoppingListsPage"
+    x:Name="ShoppingListPage"
+    Style="{StaticResource BackgroundStyle}">
+
+    <ScrollView Margin="0,20,0,0">
+        <VerticalStackLayout Style="{StaticResource MainPageVertical}">
+            <Label Text="All Shopping Lists" Style="{StaticResource HeaderLabel}"/>
+            <Entry Placeholder="New list name" Text="{Binding NewListName}" Style="{StaticResource ShoppingListEntry}"/>
+            <Button Text="Add List" Command="{Binding AddListCommand}" Style="{StaticResource GeneralPurposeButton}" 
+                    MinimumWidthRequest="500"/>
+
+            <CollectionView ItemsSource="{Binding ShoppingLists}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Style="{StaticResource GridStyle}"
+                              Padding="0,0,0,20"
+                              ColumnSpacing="10"
+                              VerticalOptions="CenterAndExpand">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Name}" 
+                                   Style="{StaticResource ShoppingListItemLabel}"
+                                   FontSize="25"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"
+                                   Grid.Column="0"
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ShoppingListPage}, Path=BindingContext.EditListCommand}"
+                                           CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Button Text="Set Active" 
+                                    Style="{StaticResource GeneralPurposeButton}"
+                                    Command="{Binding Source={x:Reference ShoppingListPage}, Path=BindingContext.SetActiveCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
